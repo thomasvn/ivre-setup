@@ -1,17 +1,8 @@
 ##############################
-# Installation
-##############################
-sudo apt-get -y install mongodb python-pymongo python-crypto python-future python-bottle apache2 libapache2-mod-wsgi dokuwiki
-git clone https://github.com/cea-sec/ivre
-cd ivre
-python setup.py build
-sudo python setup.py install
-
-##############################
 # Setup
 ##############################
-$ sudo -s
-cd /var/www/html ## or depending on your version /var/www
+sudo -s
+cd /var/www/html
 rm index.html
 ln -s /usr/local/share/ivre/web/static/* .
 cd /var/lib/dokuwiki/data/pages
@@ -24,7 +15,6 @@ patch -p0 < /usr/local/share/ivre/dokuwiki/backlinks.patch
 cd /etc/apache2/mods-enabled
 for m in rewrite.load wsgi.conf wsgi.load ; do [ -L $m ] || ln -s ../mods-available/$m ; done
 cd ../
-# replace /usr/share/ivre/web/wsgi/app.wsgi with the actual location if needed:
 echo 'Alias /cgi "/usr/share/ivre/web/wsgi/app.wsgi"' > conf-enabled/ivre.conf
 echo '<Location /cgi>' >> conf-enabled/ivre.conf
 echo 'SetHandler wsgi-script' >> conf-enabled/ivre.conf
